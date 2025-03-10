@@ -34,7 +34,9 @@ Route::post('/posts', [PostController::class, 'createPost'])->name('posts.store'
 Route::delete('/posts/{post}', [PostController::class, 'deletePost'])->name('posts.delete')->middleware('auth');
 Route::post('/posts/{id}/like', [PostController::class, 'likePost'])->name('posts.like')->middleware('auth');
 
-
 // Rutas de los comentarios
 Route::post('/posts/{post}/comments', [CommentController::class, 'comment'])->name('comments.store')->middleware('auth');
+
+// Ruta para ver el post individual
+Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');
 
