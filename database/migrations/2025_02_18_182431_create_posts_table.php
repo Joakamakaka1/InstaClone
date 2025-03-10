@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('publish_date');
             $table->integer('n_likes')->default(0); 
             $table->json('liked_users')->nullable(); // JSON para almacenar los IDs de los usuarios que han dado "Me gusta" para saber cuántos me gusta ha dado esa persona
+            $table->string('image_path')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->timestamps(); 
         });

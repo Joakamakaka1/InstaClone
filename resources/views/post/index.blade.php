@@ -8,7 +8,7 @@
 
     <!-- Crear un nuevo Post -->
     <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg mb-12">
-        <form action="{{ route('posts.store') }}" method="POST">
+        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data"> <!-- Añadido enctype -->
             @csrf
             <div class="space-y-4">
                 <div>
@@ -23,11 +23,16 @@
                     <label for="description" class="text-sm font-semibold text-gray-800">Descripción</label>
                     <textarea id="description" name="description" class="w-full p-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
                 </div>
+                <div>
+                    <label for="image" class="text-sm font-semibold text-gray-800">Imagen (Opcional)</label>
+                    <input type="file" id="image" name="image" class="w-full p-3 border border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg">
                     Publicar Post
                 </button>
             </div>
         </form>
+
     </div>
 
     <!-- Mostrar los posts -->
@@ -45,7 +50,11 @@
 
             <!-- Imagen o contenido del Post -->
             <div class="relative">
+                @if($post->image_path) <!-- Si el post tiene una imagen -->
+                <img src="{{ asset('storage/' . $post->image_path) }}" alt="Post Image" class="w-full h-72 object-cover">
+                @else
                 <img src="https://via.placeholder.com/700x400" alt="Post Image" class="w-full h-72 object-cover">
+                @endif
             </div>
 
             <!-- Botones de interacción -->

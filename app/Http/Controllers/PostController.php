@@ -20,18 +20,27 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'publish_date' => 'required|date',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048', 
         ]);
+
+        // Subir la imagen si existe
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public'); // Guardar la imagen en el disco público
+        }
 
         // Crear un nuevo post para el usuario autenticado
         Post::create([
             'title' => $request->title,
             'description' => $request->description,
             'publish_date' => $request->publish_date,
-            'user_id' => Auth::id(), // Asignar el user_id del usuario autenticado
+            'image_path' => $imagePath,
+            'user_id' => Auth::id(), 
         ]);
 
         return redirect()->route('posts.index');
     }
+
 
     public function deletePost($id)
     {
